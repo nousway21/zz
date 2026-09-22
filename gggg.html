@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siz uchun Maxsus Izhor ✨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0d0714;
+            color: #fce7f3;
+        }
+
+        .font-serif-romantic {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .font-handwriting {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Glassmorphism Styling */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px 0 rgba(236, 72, 153, 0.2);
+        }
+
+        /* Stars Background Animation */
+        .bg-stars {
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #fbcfe8, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #f472b6, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 160px 120px, #e11d48, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+        }
+
+        /* Floating Hearts Animation */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-20vh) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .floating-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 8s linear infinite;
+        }
+
+        /* 3D Flip Card */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+
+        .flip-card-inner {
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner,
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Pulsing Glow */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 25px rgba(225, 29, 72, 0.6), 0 0 50px rgba(225, 29, 72, 0.2); }
+            50% { box-shadow: 0 0 45px rgba(225, 29, 72, 0.9), 0 0 90px rgba(225, 29, 72, 0.4); }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2.5s infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0714;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #be123c;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen bg-stars flex flex-col items-center justify-between selection:bg-pink-500 selection:text-white">
+
+    <!-- Audio Elements Toggle Button -->
+    <div class="fixed top-5 right-5 z-50 flex items-center gap-3">
+        <button id="musicToggle" type="button" class="glass-card p-3 rounded-full hover:bg-white/10 transition text-pink-300 flex items-center justify-center border border-pink-500/30 active:scale-95">
+            <svg id="musicIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12 0c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Intro Envelope Section -->
+    <section id="entrySection" class="fixed inset-0 z-40 flex flex-col items-center justify-center bg-[#0d0714] p-4 text-center transition-all duration-700">
+        <div class="max-w-md w-full flex flex-col items-center">
+            
+            <div id="envelope" class="relative w-64 h-48 bg-gradient-to-tr from-rose-900 to-pink-800 rounded-2xl shadow-2xl flex items-center justify-center cursor-pointer pulse-glow transform hover:scale-105 transition-all duration-300 mb-8 border border-pink-500/40">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="text-6xl animate-bounce">💌</span>
+                </div>
+                <div class="absolute -bottom-4 w-12 h-12 bg-rose-600 rounded-full border-2 border-amber-300 flex items-center justify-center shadow-lg text-amber-200 font-bold text-sm">
+                    💖
+                </div>
+            </div>
+
+            <h1 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-300 to-amber-200 mb-4">
+                Faqat Siz Uchun ✨
+            </h1>
+            <p class="text-pink-200/80 mb-8 text-sm md:text-base font-light">
+                Yuragimning eng tubidagi sirli va samimiy tuyg'ularim...
+            </p>
+
+            <button id="openBtn" type="button" class="px-8 py-4 bg-gradient-to-r from-rose-600 to-pink-500 hover:from-rose-500 hover:to-pink-400 text-white font-semibold rounded-full shadow-lg shadow-rose-500/50 transform hover:-translate-y-1 active:translate-y-0 transition-all duration-200 flex items-center gap-2 border border-pink-300/30">
+                <span>Siz uchun maxsus sovg'ani oching</span>
+                <span class="text-xl">✨</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Main Romantic Content -->
+    <main id="mainContent" class="hidden opacity-0 transition-opacity duration-700 w-full max-w-4xl px-4 py-12 flex flex-col gap-20 relative z-10">
+
+        <!-- Hero Header -->
+        <header class="text-center space-y-4 pt-6">
+            <span class="px-4 py-1.5 rounded-full glass-card text-xs md:text-sm text-pink-300 uppercase tracking-widest border border-pink-500/30">
+                Cheksiz Sevgi Bilan
+            </span>
+            <h1 class="text-5xl md:text-7xl font-serif-romantic text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-300 to-amber-200">
+                Xush kelibsiz, Mening Farishtam!
+            </h1>
+            <p class="text-slate-300 max-w-xl mx-auto text-sm md:text-base font-light leading-relaxed">
+                Ushbu sahifa dunyodagi eng go'zal va qadrli insonga atab yaratildi. Har bir so'zida mening chin kalbiy hislarim yashiringan...
+            </p>
+        </header>
+
+        <!-- Memory Flip Cards Section -->
+        <section class="space-y-8">
+            <div class="text-center space-y-2">
+                <h2 class="text-3xl font-bold text-pink-200 flex items-center justify-center gap-2">
+                    <span>Bizning Unutilmas Kunlarimiz</span>
+                    <span class="text-rose-500">📖</span>
+                </h2>
+                <p class="text-pink-300/60 text-xs md:text-sm">Kartalarni ustiga bosing va xotiralarni varoqlang</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Card 1 -->
+                <div class="flip-card h-56 perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl">
+                        <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-pink-500/20">
+                            <div class="flex justify-between items-start">
+                                <span class="text-3xl">✨</span>
+                                <span class="text-xs font-mono text-pink-400 bg-pink-950/50 px-2 py-1 rounded">01</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-rose-200">Birinchi Nigoh va Uchrashuv</h3>
+                                <p class="text-xs text-pink-300/70 mt-1">Aynan o'sha kundan boshlab hayotim tamoman o'zgardi...</p>
+                            </div>
+                            <span class="text-xs text-pink-400/50 italic text-right">Aylantirish uchun bosing ➔</span>
+                        </div>
+                        <div class="flip-card-back absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-center items-center text-center border border-rose-500/40 bg-gradient-to-br from-rose-950/90 to-purple-950/90">
+                            <p class="text-sm text-pink-100 leading-relaxed font-handwriting text-xl">
+                                "Sizni birinchi bor ko'rganimda, ko'zlaringizdagi samimiylik va iliqlikdan yuragim boshqacha ura boshlagan edi."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flip-card h-56 perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl">
+                        <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-pink-500/20">
+                            <div class="flex justify-between items-start">
+                                <span class="text-3xl">🌙</span>
+                                <span class="text-xs font-mono text-pink-400 bg-pink-950/50 px-2 py-1 rounded">02</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-rose-200">Tungi Samimiy Suhbatlar</h3>
+                                <p class="text-xs text-pink-300/70 mt-1">Vaqt to'xtab qolgandek tuyulgan ushbu onlarda...</p>
+                            </div>
+                            <span class="text-xs text-pink-400/50 italic text-right">Aylantirish uchun bosing ➔</span>
+                        </div>
+                        <div class="flip-card-back absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-center items-center text-center border border-rose-500/40 bg-gradient-to-br from-rose-950/90 to-purple-950/90">
+                            <p class="text-sm text-pink-100 leading-relaxed font-handwriting text-xl">
+                                "Siz bilan tunda soatlab gaplashganimizda, butun dunyo shovqini yo'qolib, faqat sizning ovozingiz qolardi."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flip-card h-56 perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl">
+                        <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-pink-500/20">
+                            <div class="flex justify-between items-start">
+                                <span class="text-3xl">🌷</span>
+                                <span class="text-xs font-mono text-pink-400 bg-pink-950/50 px-2 py-1 rounded">03</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-rose-200">Kutilmagan Baxtli Damlar</h3>
+                                <p class="text-xs text-pink-300/70 mt-1">Har bir kulgungiz men uchun eng katta sovg'a...</p>
+                            </div>
+                            <span class="text-xs text-pink-400/50 italic text-right">Aylantirish uchun bosing ➔</span>
+                        </div>
+                        <div class="flip-card-back absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-center items-center text-center border border-rose-500/40 bg-gradient-to-br from-rose-950/90 to-purple-950/90">
+                            <p class="text-sm text-pink-100 leading-relaxed font-handwriting text-xl">
+                                "Kulgichlaringiz va baxtli nigohingizni ko'rish — men uchun dunyodagi barcha boyliklardan a'loroq."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="flip-card h-56 perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl">
+                        <div class="flip-card-front absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-between border border-pink-500/20">
+                            <div class="flex justify-between items-start">
+                                <span class="text-3xl">🌌</span>
+                                <span class="text-xs font-mono text-pink-400 bg-pink-950/50 px-2 py-1 rounded">04</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-rose-200">Kelajakdagi Orzularimiz</h3>
+                                <p class="text-xs text-pink-300/70 mt-1">Xudo xohlasa, hali oldimizda eng go'zal kunlar kutmoqda...</p>
+                            </div>
+                            <span class="text-xs text-pink-400/50 italic text-right">Aylantirish uchun bosing ➔</span>
+                        </div>
+                        <div class="flip-card-back absolute inset-0 glass-card rounded-2xl p-6 flex flex-col justify-center items-center text-center border border-rose-500/40 bg-gradient-to-br from-rose-950/90 to-purple-950/90">
+                            <p class="text-sm text-pink-100 leading-relaxed font-handwriting text-xl">
+                                "Siz bilan yonma-yon o'tadigan har bir kunim baxtga to'la va kelajagimiz bundan ham yorqinroq bo'ladi!"
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Reason Generator Section -->
+        <section class="glass-card rounded-3xl p-8 border border-pink-500/30 text-center space-y-6">
+            <h2 class="text-3xl font-bold text-pink-200 flex items-center justify-center gap-2">
+                <span>Nega Aynan Siz?</span>
+                <span class="text-rose-500">❤️</span>
+            </h2>
+            <p class="text-pink-300/70 text-sm max-w-md mx-auto">
+                Yuragimdagi sabablardan birini bilish uchun quyidagi sehrli tugmani bosing:
+            </p>
+
+            <div class="min-h-[100px] flex items-center justify-center">
+                <div id="reasonBox" class="text-xl md:text-2xl font-serif-romantic text-amber-200 p-4 transition-all duration-300">
+                    "Tugmani bosing va sirli izhorni o'qing... ✨"
+                </div>
+            </div>
+
+            <button id="nextReasonBtn" type="button" class="px-6 py-3 bg-rose-600/50 hover:bg-rose-600 text-white font-medium rounded-full border border-pink-400/40 transition-all hover:shadow-lg hover:shadow-pink-500/30 active:scale-95 flex items-center gap-2 mx-auto">
+                <span>Yangi izhorni ko'rish</span>
+                <span>💖</span>
+            </button>
+        </section>
+
+        <!-- Dodging Button Love Quiz -->
+        <section class="glass-card rounded-3xl p-8 border border-pink-500/30 text-center space-y-8 relative overflow-hidden">
+            <div class="space-y-2">
+                <span class="text-xs uppercase tracking-widest text-pink-400 font-semibold">Kichik O'yin</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-pink-100">
+                    Sizni bu dunyoda kim eng ko'p yaxshi ko'radi? 🤔
+                </h2>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 relative min-h-[140px] p-2" id="quizContainer">
+                <button id="yesBtn" type="button" class="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95 z-10">
+                    Sizni judayam qattiq sevadigan insoningiz (Men) 💖
+                </button>
+
+                <button id="noBtn" type="button" class="px-8 py-4 bg-slate-700 text-slate-300 font-bold rounded-2xl transition-all duration-200 z-20">
+                    Boshqa birov 🙈
+                </button>
+            </div>
+
+            <p id="quizResult" class="text-rose-300 font-semibold text-lg hidden animate-bounce">
+                To'g'ri va yagona javob! Boshqa varianti ham bo'lishi mumkin emas edi! 😉🥰
+            </p>
+        </section>
+
+        <!-- Grand Finale Letter Section -->
+        <section id="grandFinale" class="glass-card rounded-3xl p-8 md:p-12 border border-amber-300/30 text-center space-y-8 bg-gradient-to-b from-rose-950/40 to-slate-950/60 relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-40 h-40 bg-pink-500/10 rounded-full blur-3xl"></div>
+            
+            <span class="text-5xl animate-pulse inline-block">🌹</span>
+            
+            <h2 class="text-4xl md:text-6xl font-serif-romantic text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-rose-200 to-pink-300">
+                Mening Yurak Izhorim
+            </h2>
+
+            <div class="max-w-2xl mx-auto space-y-6 text-slate-200 leading-relaxed font-light text-base md:text-lg text-justify md:text-center">
+                <p>
+                    Azizam, hayotimga kirib kelganingiz uchun sizdan behad minnatdorman. Siz mening kunlarimga nur, ko'nglimga xotirjamlik va yuragimga cheksiz baxt olib keldingiz.
+                </p>
+                <p>
+                    Har bir tabassumingiz, samimiy so'zingiz va mehringiz men uchun juda qadrli. Siz bilan birga o'tayotgan har bir daqiqa — bu taqdirning eng go'zal in'omi.
+                </p>
+                <p class="font-serif-romantic text-3xl text-amber-200 pt-4">
+                    Sizni jonimdan ortiq yaxshi ko'raman! ❤️
+                </p>
+            </div>
+
+            <div class="pt-6">
+                <button id="celebrateBtn" type="button" class="px-10 py-5 bg-gradient-to-r from-amber-400 via-rose-500 to-pink-600 hover:from-amber-300 hover:to-pink-500 text-white font-extrabold text-lg rounded-full shadow-2xl shadow-rose-500/60 transform hover:scale-105 active:scale-95 transition-all duration-300 border border-amber-200/40">
+                    Yurakdan Tabriklayman! 🎉✨
+                </button>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-xs text-pink-300/40 pb-12">
+            Maxsus sevgi va mehr bilan tayyorlandi ❤️
+        </footer>
+
+    </main>
+
+    <script>
+        class SoundFX {
+            constructor() {
+                this.ctx = null;
+            }
+
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+            }
+
+            playHeartSound() {
+                if (!this.ctx) return;
+                try {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(440, this.ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.3);
+
+                    gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.3);
+
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + 0.3);
+                } catch(e) {}
+            }
+
+            playMelody() {
+                if (!this.ctx) return;
+                try {
+                    const notes = [523.25, 659.25, 783.99, 1046.50];
+                    notes.forEach((freq, index) => {
+                        setTimeout(() => {
+                            const osc = this.ctx.createOscillator();
+                            const gain = this.ctx.createGain();
+                            osc.type = 'triangle';
+                            osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                            gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+                            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.6);
+                            osc.connect(gain);
+                            gain.connect(this.ctx.destination);
+                            osc.start();
+                            osc.stop(this.ctx.currentTime + 0.6);
+                        }, index * 180);
+                    });
+                } catch(e) {}
+            }
+        }
+
+        const soundFX = new SoundFX();
+
+        const romanticReasons = [
+            "Tabassumingiz butun dunyoyimni yoritadi 🌟",
+            "Siz bilan gaplashganimda barcha tashvishlar yoddan ko'tariladi ✨",
+            "Menga baxsh etgan samimiy va toza mehrigiz uchun...",
+            "Siz bilan har bir soniya sehrli xuddi ertakdagidek ❤️",
+            "Ko'zlaringizdagi iliqlik meni har safar qayta oshiq qiladi 🌷",
+            "Dunyo bir chetda qolib, faqat siz bilan bo'lgim kelgani uchun..."
+        ];
+
+        let currentReasonIndex = 0;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const entrySection = document.getElementById('entrySection');
+            const mainContent = document.getElementById('mainContent');
+            const openBtn = document.getElementById('openBtn');
+            const envelope = document.getElementById('envelope');
+            const musicToggle = document.getElementById('musicToggle');
+            const nextReasonBtn = document.getElementById('nextReasonBtn');
+            const reasonBox = document.getElementById('reasonBox');
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const quizResult = document.getElementById('quizResult');
+            const celebrateBtn = document.getElementById('celebrateBtn');
+            const quizContainer = document.getElementById('quizContainer');
+
+            // Initialize audio context safely on first click
+            const initAudio = () => {
+                soundFX.init();
+                document.removeEventListener('click', initAudio);
+            };
+            document.addEventListener('click', initAudio);
+
+            // Smooth reveal without page scrolling or jumps
+            function revealSite(e) {
+                if(e) e.preventDefault();
+                soundFX.playMelody();
+                
+                entrySection.classList.add('opacity-0');
+                
+                setTimeout(() => {
+                    entrySection.style.display = 'none';
+                    mainContent.classList.remove('hidden');
+                    // Force a smooth fade-in
+                    setTimeout(() => {
+                        mainContent.classList.remove('opacity-0');
+                    }, 50);
+                    triggerConfetti();
+                }, 700);
+            }
+
+            openBtn.addEventListener('click', revealSite);
+            envelope.addEventListener('click', revealSite);
+
+            // Music Button Toggle
+            let isMusicPlaying = false;
+            musicToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                isMusicPlaying = !isMusicPlaying;
+                soundFX.playMelody();
+                musicToggle.classList.toggle('bg-rose-600/40', isMusicPlaying);
+            });
+
+            // Cycle reasons gracefully
+            nextReasonBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                soundFX.playHeartSound();
+                reasonBox.style.opacity = '0';
+                reasonBox.style.transform = 'translateY(10px)';
+
+                setTimeout(() => {
+                    currentReasonIndex = (currentReasonIndex + 1) % romanticReasons.length;
+                    reasonBox.textContent = romanticReasons[currentReasonIndex];
+                    reasonBox.style.opacity = '1';
+                    reasonBox.style.transform = 'translateY(0)';
+                }, 300);
+            });
+
+            // Smoothly dodge 'No' button inside container bounds without scrolling page
+            function dodgeNoButton(e) {
+                if (e) e.preventDefault();
+                soundFX.playHeartSound();
+
+                const containerRect = quizContainer.getBoundingClientRect();
+                const btnRect = noBtn.getBoundingClientRect();
+
+                const maxX = (containerRect.width - btnRect.width) / 2 - 10;
+                const maxY = 40;
+
+                const randomX = (Math.random() - 0.5) * maxX * 2;
+                const randomY = (Math.random() - 0.5) * maxY * 2;
+
+                noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            }
+
+            noBtn.addEventListener('mouseover', dodgeNoButton);
+            noBtn.addEventListener('touchstart', dodgeNoButton, { passive: false });
+
+            yesBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                soundFX.playMelody();
+                triggerConfetti();
+                quizResult.classList.remove('hidden');
+                noBtn.style.display = 'none';
+            });
+
+            celebrateBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                soundFX.playMelody();
+                triggerMassiveFireworks();
+            });
+
+            // Flip Card Click behavior for mobile tap support
+            document.querySelectorAll('.flip-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    card.classList.toggle('flipped');
+                });
+            });
+
+            createFloatingHearts();
+        });
+
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#f472b6', '#e11d48', '#fef08a']
+                });
+            }
+        }
+
+        function triggerMassiveFireworks() {
+            if (typeof confetti !== 'function') return;
+
+            const duration = 3 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 99 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 40 * (timeLeft / duration);
+                
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.1, 0.4), y: Math.random() * 0.4 + 0.2 },
+                    colors: ['#f472b6', '#be123c', '#fef08a']
+                }));
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.6, 0.9), y: Math.random() * 0.4 + 0.2 },
+                    colors: ['#f472b6', '#be123c', '#fef08a']
+                }));
+            }, 250);
+        }
+
+        function createFloatingHearts() {
+            const heartEmojis = ['💖', '💕', '🌸', '✨', '🌹'];
+
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                heart.style.left = Math.random() * 95 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 12 + 16) + 'px';
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 8000);
+            }, 900);
+        }
+
+        // Tap/Click Anywhere Sparkle Effect
+        document.addEventListener('click', (e) => {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'fixed pointer-events-none text-xl z-50 animate-ping';
+            sparkle.style.left = (e.clientX - 10) + 'px';
+            sparkle.style.top = (e.clientY - 10) + 'px';
+            sparkle.innerHTML = '✨';
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => sparkle.remove(), 600);
+        });
+    </script>
+</body>
+</html>
